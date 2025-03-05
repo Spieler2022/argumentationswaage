@@ -237,8 +237,13 @@ document.addEventListener("mousemove", (e) => {
   ) {
     const width = e.clientX - currentRectangle.offsetLeft;
     const height = e.clientY - currentRectangle.offsetTop;
-    currentRectangle.style.width = width + "px";
-    currentRectangle.style.height = height + "px";
+    const container = document.body;
+    const containerRect = container.getBoundingClientRect();
+    const widthPercent = (width / containerRect.width) * 100;
+    const heightPercent = (height / containerRect.height) * 100;
+
+    currentRectangle.style.width = widthPercent + "%";
+    currentRectangle.style.height = heightPercent + "%";
   } else if (currentRectangle) {
     const container = document.body;
     const containerRect = container.getBoundingClientRect();
@@ -328,7 +333,10 @@ document.addEventListener("mouseup", () => {
     const resizer = document.createElement("div");
     resizer.classList.add("resizer");
 
-    if (newRectangle.style.width < "3%" || newRectangle.style.height < "3%") {
+    if (
+      parseFloat(newRectangle.style.width.replace("%", "")) < 20 ||
+      parseFloat(newRectangle.style.height.replace("%", "")) < 10
+    ) {
       newRectangle.remove();
     } else {
       newRectangle.appendChild(resizer);
