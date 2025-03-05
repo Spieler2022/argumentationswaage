@@ -32,7 +32,8 @@ function add() {
     const card = document.createElement("div");
     card.classList.add("card");
     card.style.left = "50%";
-    card.style.top = "50%";
+    card.style.top =
+      document.body.getBoundingClientRect().width > 768 ? "50%" : "75%";
     card.style.zIndex = currentZIndex++;
     card.id = "card-" + Math.floor(Math.random().toPrecision(5) * 100000);
 
@@ -48,9 +49,9 @@ function add() {
     }
 
     // Create the delete button
-    const deleteButton = document.createElement("i");
+    const deleteButton = document.createElement("span");
     deleteButton.classList.add("delete");
-    deleteButton.textContent = "delete";
+    deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
     deleteButton.addEventListener("click", (e) => {
       delete cards[card.id];
       card.remove();
@@ -321,9 +322,9 @@ document.addEventListener("mouseup", () => {
     inputField.classList.add("rect-title");
 
     // Add delete button to the rectangle
-    const deleteButton = document.createElement("i");
+    const deleteButton = document.createElement("span");
     deleteButton.classList.add("delete");
-    deleteButton.textContent = "delete";
+    deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
     deleteButton.addEventListener("click", (e) => {
       rectangles[id].remove();
       delete rectangles[id];
@@ -371,8 +372,15 @@ document.addEventListener("touchstart", (e) => {
   if (card) {
     card.style.zIndex = currentZIndex++;
     currentCard = card;
-    offsetX = touch.clientX - card.offsetLeft;
-    offsetY = touch.clientY - card.offsetTop;
+    const containerRect = document.body.getBoundingClientRect();
+    const currentLeft = parseFloat(card.style.left) || 0;
+    const currentTop = parseFloat(card.style.top) || 0;
+    const pointerLeftPercent =
+      ((touch.clientX - containerRect.left) / containerRect.width) * 100;
+    const pointerTopPercent =
+      ((touch.clientY - containerRect.top) / containerRect.height) * 100;
+    offsetX = pointerLeftPercent - currentLeft;
+    offsetY = pointerTopPercent - currentTop;
     currentCard.style.cursor = "grabbing";
     userSelectTimeout = setTimeout(
       () => (document.body.style.userSelect = "none"),
@@ -387,12 +395,13 @@ document.addEventListener(
   (e) => {
     if (currentCard) {
       const touch = e.touches[0];
-      const container = document.body;
-      const containerRect = container.getBoundingClientRect();
-      const relativeX = touch.clientX - containerRect.left - offsetX;
-      const relativeY = touch.clientY - containerRect.top - offsetY;
-      const leftPercent = (relativeX / containerRect.width) * 100;
-      const topPercent = (relativeY / containerRect.height) * 100;
+      const containerRect = document.body.getBoundingClientRect();
+      const pointerLeftPercent =
+        ((touch.clientX - containerRect.left) / containerRect.width) * 100;
+      const pointerTopPercent =
+        ((touch.clientY - containerRect.top) / containerRect.height) * 100;
+      const leftPercent = pointerLeftPercent - offsetX;
+      const topPercent = pointerTopPercent - offsetY;
       if (
         leftPercent < 0 ||
         leftPercent > 100 ||
@@ -402,7 +411,7 @@ document.addEventListener(
         return;
       currentCard.style.left = leftPercent + "%";
       currentCard.style.top = topPercent + "%";
-      e.preventDefault(); // Prevent scrolling while dragging
+      e.preventDefault(); // Verhindert Scrollen während des Draggings
     }
   },
   { passive: false }
@@ -612,9 +621,9 @@ function createCardFromData(data) {
     card.appendChild(cardDescription);
   }
 
-  const deleteButton = document.createElement("i");
+  const deleteButton = document.createElement("span");
   deleteButton.classList.add("delete");
-  deleteButton.textContent = "delete";
+  deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
   deleteButton.addEventListener("click", (e) => {
     delete cards[card.id];
     card.remove();
@@ -648,9 +657,9 @@ function createRectangleFromData(data) {
   resizer.classList.add("resizer");
   rect.appendChild(resizer);
 
-  const deleteButton = document.createElement("i");
+  const deleteButton = document.createElement("span");
   deleteButton.classList.add("delete");
-  deleteButton.textContent = "delete";
+  deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
   deleteButton.addEventListener("click", (e) => {
     delete rectangles[rect.id];
     rect.remove();

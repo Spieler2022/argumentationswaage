@@ -2,7 +2,10 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
     <title>Argumentationswaage</title>
     <link rel="stylesheet" href="index.css" />
     <script src="https://unpkg.com/fflate"></script>
@@ -14,6 +17,7 @@
       id="topic"
       placeholder="Argumentationsthema"
       style="z-index: -1"
+      title="Thema der Argumentation hinzufügen"
     />
     <div class="add-argument" style="z-index: 99999999999999999999">
       <h2>Argument hinzufügen</h2>
@@ -30,10 +34,46 @@
       ><button id="add-button">hinzufügen</button>
     </div>
     <div class="json-tools" style="z-index: 99999999999999999999">
-      <div id="load"><i>upload_file</i></div>
-      <div id="save"><i>save</i></div>
+      <div id="load" title="aus Datei laden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="30px"
+          viewBox="0 -960 960 960"
+          width="30px"
+          fill="rgba(0, 0, 0, 0.7)"
+        >
+          <path
+            d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+          />
+        </svg>
+      </div>
+      <div id="save" title="in Datei speichern">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="30px"
+          viewBox="0 -960 960 960"
+          width="30px"
+          fill="rgba(0, 0, 0, 0.7)"
+        >
+          <path
+            d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"
+          />
+        </svg>
+      </div>
       <hr />
-      <div id="color-button-toggle"><i>colors</i></div>
+      <div id="color-button-toggle" title="Farbauswahl aktivieren/deaktivieren">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="30px"
+          viewBox="0 -960 960 960"
+          width="30px"
+          fill="rgba(0, 0, 0, 0.7)"
+        >
+          <path
+            d="M346-140 100-386q-10-10-15-22t-5-25q0-13 5-25t15-22l230-229-106-106 62-65 400 400q10 10 14.5 22t4.5 25q0 13-4.5 25T686-386L440-140q-10 10-22 15t-25 5q-13 0-25-5t-22-15Zm47-506L179-432h428L393-646Zm399 526q-36 0-61-25.5T706-208q0-27 13.5-51t30.5-47l42-54 44 54q16 23 30 47t14 51q0 37-26 62.5T792-120Z"
+          />
+        </svg>
+      </div>
     </div>
     <div class="legend">
       <h2>Legende</h2>
