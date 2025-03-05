@@ -1,1 +1,1 @@
-# argumentationswaage
+# Argumentationswaage

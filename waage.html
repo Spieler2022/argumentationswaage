@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waage</title>
+  </head>
+  <body>
+    <input
+      type="range"
+      id="angleSlider"
+      min="-20"
+      max="200"
+      value="0"
+      step="1"
+    />
+    <svg
+      id="scaleSvg"
+      width="300"
+      height="300"
+      viewBox="0 0 300 300"
+      xmlns="http://www.w3.org/2000/svg"
+      transform="scale(0.6)"
+    >
+      <!-- Fuß der Waage -->
+      <rect x="142.5" y="217" width="15" height="30" fill="black" />
+
+      <!-- Vertikaler Balken (kürzer) -->
+      <rect x="145" y="150" width="10" height="80" fill="black" />
+
+      <!-- Drehpunkt -->
+      <circle cx="150" cy="150" r="5" fill="black" />
+
+      <!-- Kippbarer Balken -->
+      <g id="balanceBar">
+        <rect x="95" y="145" width="110" height="10" fill="black" />
+      </g>
+
+      <!-- Seile und Schalen -->
+      <line
+        id="leftRope"
+        x1="110"
+        y1="155"
+        x2="110"
+        y2="200"
+        stroke="black"
+        stroke-width="2"
+      />
+      <line
+        id="rightRope"
+        x1="190"
+        y1="155"
+        x2="190"
+        y2="200"
+        stroke="black"
+        stroke-width="2"
+      />
+      <circle id="leftPan" cx="110" cy="200" r="15" fill="gray" />
+      <circle id="rightPan" cx="190" cy="200" r="15" fill="gray" />
+    </svg>
+
+    <script>
+      document
+        .getElementById("angleSlider")
+        .addEventListener("input", function () {
+          let angle = this.value * 0.7;
+
+          // Berechnung der neuen Positionen der Seile auf einer geraden Linie
+          let leftX = 110 + angle * 1.5; // Seil nach links verschieben
+          let rightX = 190 - angle * 1.5; // Seil nach rechts verschieben
+          let yOffset = 50; // Konstante für die Höhe der Seile (nach unten)
+
+          // Setze die Rotation des Balkens
+          document
+            .getElementById("balanceBar")
+            .setAttribute("transform", `rotate(${angle},150,150)`);
+
+          // Aktualisiere die Seile: Lineare Bewegung nach unten und oben
+          let leftRopeX1 = 110 + angle * 0.4;
+          let leftRopeY1 = 150 - angle * 0.45;
+          let leftRopeX2 = leftRopeX1;
+          let leftRopeY2 = 200 - angle * 0.45;
+
+          let rightRopeX1 = 190 + angle * 0.4;
+          let rightRopeY1 = 150 + angle * 0.45;
+          let rightRopeX2 = rightRopeX1;
+          let rightRopeY2 = 200 + angle * 0.45;
+
+          document.getElementById("rightRope").setAttribute("y1", leftRopeY1);
+          document.getElementById("rightRope").setAttribute("x2", leftRopeX2);
+          document.getElementById("rightRope").setAttribute("x1", leftRopeX1);
+          document.getElementById("rightRope").setAttribute("y2", leftRopeY2);
+
+          document.getElementById("leftRope").setAttribute("x1", rightRopeX1);
+          document.getElementById("leftRope").setAttribute("y1", rightRopeY1);
+          document.getElementById("leftRope").setAttribute("x2", rightRopeX2);
+          document.getElementById("leftRope").setAttribute("y2", rightRopeY2);
+
+          // Setze die Position der Schalen
+          document.getElementById("rightPan").setAttribute("cx", leftRopeX2);
+          document.getElementById("rightPan").setAttribute("cy", leftRopeY2);
+          document.getElementById("leftPan").setAttribute("cx", rightRopeX2);
+          document.getElementById("leftPan").setAttribute("cy", rightRopeY2);
+        });
+    </script>
+  </body>
+</html>

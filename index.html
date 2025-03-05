@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <title>Argumentationswaage</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://unpkg.com/fflate"></script>
+  </head>
+  <body>
+    <h1>&nbsp;Argumentationswaage&nbsp;</h1>
+    <input
+      type="text"
+      id="topic"
+      placeholder="Argumentationsthema"
+      style="z-index: -1"
+    />
+    <div class="add-argument" style="z-index: 99999999999999999999">
+      <h2>Argument hinzufügen</h2>
+      <hr />
+      <input
+        type="text"
+        id="title-input"
+        placeholder="Titel"
+        autofocus
+      /><textarea
+        id="description-input"
+        placeholder="Beschreibung (optional)"
+      ></textarea
+      ><button id="add-button">hinzufügen</button>
+    </div>
+    <div class="json-tools" style="z-index: 99999999999999999999">
+      <div id="load"><i>upload_file</i></div>
+      <div id="save"><i>save</i></div>
+      <hr />
+      <div id="color-button-toggle"><i>colors</i></div>
+    </div>
+    <div class="legend">
+      <h2>Legende</h2>
+      <hr />
+    </div>
+    <main class="cards"></main>
+    <div class="labels" style="z-index: -1">
+      <span>Pro</span><span>Contra</span>
+    </div>
+    <svg
+      id="scale"
+      width="300"
+      height="300"
+      viewBox="0 0 300 300"
+      xmlns="http://www.w3.org/2000/svg"
+      transform="scale(0.6)"
+      style="z-index: -1"
+    >
+      <!-- Fuß der Waage -->
+      <rect x="142.5" y="217" width="15" height="30" fill="black" />
+
+      <!-- Vertikaler Balken (kürzer) -->
+      <rect x="145" y="150" width="10" height="80" fill="black" />
+
+      <!-- Drehpunkt -->
+      <circle cx="150" cy="150" r="5" fill="black" />
+
+      <!-- Kippbarer Balken -->
+      <g id="balanceBar">
+        <rect x="95" y="145" width="110" height="10" fill="black" />
+      </g>
+
+      <!-- Seile und Schalen -->
+      <g id="leftRopeGroup">
+        <line
+          id="leftRope"
+          x1="110"
+          y1="155"
+          x2="110"
+          y2="200"
+          stroke="black"
+          stroke-width="2"
+        />
+      </g>
+      <g id="rightRopeGroup">
+        <line
+          id="rightRope"
+          x1="190"
+          y1="155"
+          x2="190"
+          y2="200"
+          stroke="black"
+          stroke-width="2"
+        />
+      </g>
+      <!-- Pans in Gruppen für smooth transitions -->
+      <g class="pan" id="leftPan">
+        <circle cx="110" cy="200" r="15" fill="gray" />
+      </g>
+      <g class="pan" id="rightPan">
+        <circle cx="190" cy="200" r="15" fill="gray" />
+      </g>
+    </svg>
+    <footer>
+      <div class="bar" id="pro-bar"></div>
+      <div class="bar" id="con-bar"></div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
