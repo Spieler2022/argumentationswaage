@@ -328,7 +328,7 @@ document.addEventListener("mouseup", () => {
     const resizer = document.createElement("div");
     resizer.classList.add("resizer");
 
-    if (newRectangle.style.width < "1%" || newRectangle.style.height < "1%") {
+    if (newRectangle.style.width < "3%" || newRectangle.style.height < "3%") {
       newRectangle.remove();
     } else {
       newRectangle.appendChild(resizer);
